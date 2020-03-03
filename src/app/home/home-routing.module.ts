@@ -22,10 +22,6 @@ const routes: Routes = [
                 loadChildren: () => import('./list-view/details/details.module').then(m => m.DetailsPageModule)
               },
               {
-                path: ':homeid',
-                loadChildren: () => import('./list-view/info/info.module').then(m => m.InfoPageModule)
-              },
-              {
                 path: 'location/:homelocation',
                 loadChildren: () => import('./list-view/location/location.module').then(m => m.LocationPageModule)
               },
@@ -45,14 +41,28 @@ const routes: Routes = [
               },
               {
                 // add note id so dat when you click the notes the will have the id as a url
-                path: 'edit/note',
+                path: 'edit/note/:notesid',
                 loadChildren: () => import('./notes/edit-notes/edit-notes.module').then(m => m.EditNotesPageModule)
               },
             ]
         },
         {
           path: 'tasks',
-          loadChildren: () => import('./tasks/tasks.module').then(m => m.TasksPageModule)
+          children:
+            [
+              {
+                path: '',
+                loadChildren: () => import('./tasks/tasks.module').then(m => m.TasksPageModule)
+              },
+              {
+                path: 'new-tasks',
+                loadChildren: () => import('./tasks/new-tasks/new-tasks.module').then( m => m.NewTasksPageModule)
+              },
+              {
+                path: 'edit/task/:tasksid',
+                loadChildren: () => import('./tasks/edit-tasks/edit-tasks.module').then(m => m.EditTasksPageModule)
+              },
+            ]
         },
         {
           path: 'more',

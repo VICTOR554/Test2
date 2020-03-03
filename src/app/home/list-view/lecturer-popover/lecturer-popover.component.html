@@ -1,5 +1,5 @@
-<p *ngFor="let home of loadedclass" >
+<p *ngFor="let home of loadedclass; let i = index" >
   
-  {{loadedclass[0].lecturer}}@outlook.com
+  {{loadedclass[i].lecturer}}@outlook.com
 
 </p>

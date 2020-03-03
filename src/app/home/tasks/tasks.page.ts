@@ -12,5 +12,5 @@ export class TasksPage implements OnInit {
   ngOnInit() {
   }
 
-  
+
 }

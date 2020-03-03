@@ -16,10 +16,6 @@ const routes: Routes = [
     path: 'location',
     loadChildren: () => import('./location/location.module').then(m => m.LocationPageModule)
   },
-  {
-    path: 'info',
-    loadChildren: () => import('./info/info.module').then(m => m.InfoPageModule)
-  },
 
 
 ];

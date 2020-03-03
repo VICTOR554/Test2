@@ -11,13 +11,13 @@ import { Router } from '@angular/router';
 })
 export class NotesPage implements OnInit {
   // experimenting with output of array
-  Notes: Note[];
+  loadednote: Note[];
   loadedclass: Homes[];
 
   constructor(private homeService: HomeService, private router: Router) { }
 
   ngOnInit() {
-    this.Notes = this.homeService.notes;
+    this.loadednote = this.homeService.notes;
     this.loadedclass = this.homeService.home;
   }
   onDelete(homeId: string, slidingItem: IonItemSliding) {

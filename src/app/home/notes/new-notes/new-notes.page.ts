@@ -29,6 +29,12 @@ export class NewNotesPage implements OnInit {
   }
 
   onCreateOffer() {
+    if (!this.form.valid) {
+      return;
+    }
     console.log(this.form);
+  }
+  clearform() {
+    this.form.reset(this.form.value);
   }
 }

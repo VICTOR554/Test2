@@ -18,22 +18,18 @@ export class NewTasksPage implements OnInit {
         updateOn: 'blur',
         validators: [Validators.required],
       }),
+      module: new FormControl(null, {
+        updateOn: 'blur',
+        validators: [Validators.required],
+      }),
+      duedate: new FormControl(null, {
+        updateOn: 'blur',
+        validators: [Validators.required],
+      }),
       description: new FormControl(null, {
         updateOn: 'blur',
         validators: [Validators.required, Validators.maxLength(1800)],
       }),
-      price: new FormControl(null, {
-        updateOn: 'blur',
-        validators: [Validators.required, Validators.min(1)],
-      }),
-      dateFrom: new FormControl(null, {
-        updateOn: 'blur',
-        validators: [Validators.required],
-      }),
-      dateTo: new FormControl(null, {
-        updateOn: 'blur',
-        validators: [Validators.required],
-      })
     });
   }
 
