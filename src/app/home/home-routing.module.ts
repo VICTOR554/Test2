@@ -41,7 +41,7 @@ const routes: Routes = [
               },
               {
                 // add note id so dat when you click the notes the will have the id as a url
-                path: 'edit/note/:notesid',
+                path: 'edit/:notesid',
                 loadChildren: () => import('./notes/edit-notes/edit-notes.module').then(m => m.EditNotesPageModule)
               },
             ]
@@ -59,7 +59,7 @@ const routes: Routes = [
                 loadChildren: () => import('./tasks/new-tasks/new-tasks.module').then( m => m.NewTasksPageModule)
               },
               {
-                path: 'edit/task/:tasksid',
+                path: 'edit/task/:alltasksid',
                 loadChildren: () => import('./tasks/edit-tasks/edit-tasks.module').then(m => m.EditTasksPageModule)
               },
             ]

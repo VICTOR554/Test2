@@ -7,6 +7,7 @@
         </ion-button>
       </ion-buttons>
 
+
       <ion-title color="primary" class="ion-text-center">February 2020</ion-title>
 
       <ion-buttons slot="end">
@@ -53,8 +54,7 @@
         <ion-col class="ion-no-padding">
           <ion-list class="ion-no-padding">
             <!-- for loop to draw the list from the array-->
-            <ion-card *ngFor="let home of loadedclass, let i = index"
-              >
+            <ion-card *ngFor="let home of loadedclass, let i = index">
               <ion-grid class="ion-no-padding">
 
                 <ion-row class="ion-no-padding">
@@ -87,9 +87,9 @@
                         </ion-button>
                         <label>-{{home.location}}</label>
 
-                      </ion-col>
+                       </ion-col>
 
-                      <ion-col class="ion-no-padding" class="ion-text-center">
+                     <ion-col class="ion-no-padding" class="ion-text-center">
 
                         <!-- i want to click on this button and view the selected lecturer  -->
                         <!-- i put let i =index to get the number of the lecturer in the array -->

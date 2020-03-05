@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HomeService } from '../../home.service';
 import { Homes } from '../../home.model';
 import { Events } from '@ionic/angular';
 import { Route, ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -10,8 +11,9 @@ import { Route, ActivatedRoute } from '@angular/router';
   templateUrl: './lecturer-popover.component.html',
   styleUrls: ['./lecturer-popover.component.scss'],
 })
-export class LecturerPopoverComponent implements OnInit {
+export class LecturerPopoverComponent implements OnInit, OnDestroy {
   loadedclass: Homes[];
+  private popSub: Subscription;
 
   // tslint:disable-next-line: no-inferrable-types
 
@@ -19,11 +21,17 @@ export class LecturerPopoverComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loadedclass = this.homeService.home;
+    this.popSub = this.homeService.home.subscribe(home => {
+      this.loadedclass = home;
+    });
+
 
   }
 
-
-
+  ngOnDestroy() {
+    if (this.popSub) {
+      this.popSub.unsubscribe();
+    }
+  }
 
 }

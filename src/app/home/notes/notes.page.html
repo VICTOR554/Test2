@@ -20,18 +20,16 @@
 
         <!--This is an item containing the lecture details-->
         <ion-list>
-          <!-- for loop to draw the list from the array-->
-          <!-- [routerLink]="['/', 'home', 'tabs', 'list-view', home.id]" plan to add this-->
-      
+          <!-- for loop to draw the list from the array-->      
           <ion-item-sliding *ngFor="let notes of loadednote" #slidingItem>
       
-            <ion-item [routerLink]="['/', 'home', 'tabs', 'notes', 'edit', 'note', notes.id]">
+            <ion-item [routerLink]="['/', 'home', 'tabs', 'notes', 'edit', notes.id]">
               <ion-grid class="ion-no-padding">
                 <ion-row>
-      
+       
                   <ion-col class="ion-padding">
                     <p>{{notes.title}}</p>
-                    <p>{{notes.module}}</p>
+                    <p>{{notes.modul}}</p>
                   </ion-col>
                 </ion-row>
               </ion-grid>

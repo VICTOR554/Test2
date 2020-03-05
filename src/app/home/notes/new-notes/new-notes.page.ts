@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { HomeService } from '../../home.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-new-notes',
@@ -9,7 +11,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 export class NewNotesPage implements OnInit {
   form: FormGroup;
 
-  constructor() { }
+  constructor(private homeService: HomeService, private router: Router) { }
 
   ngOnInit() {
     this.form = new FormGroup({
@@ -28,13 +30,21 @@ export class NewNotesPage implements OnInit {
     });
   }
 
-  onCreateOffer() {
+  onCreateNote() {
     if (!this.form.valid) {
       return;
     }
-    console.log(this.form);
+
+    // tslint:disable-next-line: max-line-length
+    this.homeService.addNote(
+      this.form.value.title,
+      this.form.value.modul,
+      this.form.value.description,
+    ),
+    console.log(this.homeService.notes);
+    this.form.reset();
+    this.router.navigate(['home/tabs/notes']);
+
   }
-  clearform() {
-    this.form.reset(this.form.value);
-  }
+
 }

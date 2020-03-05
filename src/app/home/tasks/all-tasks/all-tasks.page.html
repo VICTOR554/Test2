@@ -1,52 +1,43 @@
-
-
 <ion-content>
   <ion-grid>
     <ion-row>
       <ion-col>
         <ion-searchbar showCancelButton="focus"></ion-searchbar>
 
-        <!-- This is an item containing the lecture details
+        <!-- This is an item containing the lecture details -->
         <ion-list>
-          for loop to draw the list from the array
+          <!-- for loop to draw the list from the array -->
 
-          <ion-item-sliding *ngFor="let home of loadedclass" #slidingItem>
-      
-            <ion-item [routerLink]="['/', 'home', 'tabs', 'tasks', 'edit', 'task', home.id]">
+          <ion-item-sliding *ngFor="let tasks of loadedtask" #slidingItem>
+
+            <ion-item [routerLink]="['/', 'home', 'tabs', 'tasks', 'edit', 'task', tasks.id]">
               <ion-grid class="ion-no-padding">
-              
-                  
-               
+
                 <ion-row>
-                  <ion-col class="ion-no-padding" text-center size="3">
-                    <ion-row>
-                      <ion-col size="12" class="ion-padding-top" >
-                        <ion-item (click)="stop($event)" lines="none">
+                  <ion-col class="ion-no-padding" text-center size="3" (click)="stop($event)">
+                        <ion-item  lines="none" (click)="stop($event)">
                           <ion-checkbox color="primary" checked slot="start"></ion-checkbox>
                         </ion-item>
-                      </ion-col>
-
-                    </ion-row>
                   </ion-col>
-
+ 
                   <ion-col class="ion-padding">
-                    <p>{{home.tasktitle}}</p>
-                    <p >{{home.taskmodule}}</p>
-                    <p class="ion-no-margin">{{home.taskdate}}</p>
+                    <p>{{tasks.title}}</p>
+                    <p>{{tasks.modul}}</p>
+                    <p class="ion-no-margin">{{tasks.date}}</p>
                   </ion-col>
                 </ion-row>
               </ion-grid>
             </ion-item>
-      
+
             <ion-item-options>
-              <ion-item-option color="danger" (click)="onDelete(home.id, slidingItem)">
+              <ion-item-option color="danger" (click)="onDelete(tasks.id, slidingItem)">
                 <ion-icon name="trash" slot="top" class="icon"></ion-icon>
-                Delete              
+                Delete
               </ion-item-option>
             </ion-item-options>
 
           </ion-item-sliding>
-        </ion-list> -->
+        </ion-list>
       </ion-col>
     </ion-row>
   </ion-grid>

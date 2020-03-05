@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { HomeService } from '../../home.service';
-import { Homes } from '../../home.model';
+import { Note } from '../../home.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -11,9 +12,10 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
   templateUrl: './edit-notes.page.html',
   styleUrls: ['./edit-notes.page.scss'],
 })
-export class EditNotesPage implements OnInit {
-  loadedclass: Homes;
+export class EditNotesPage implements OnInit, OnDestroy {
+  loadednote: Note;
   form: FormGroup;
+  private noteSub: Subscription;
 
   constructor(
     private route: ActivatedRoute,
@@ -23,27 +25,26 @@ export class EditNotesPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    // this.route.paramMap.subscribe(paramMap => {
-    //   if (!paramMap.has('homeId')) {
-    //     this.navCtrl.navigateBack('/home/tabs/notes');
-    //     return;
-    //   }
-    //   this.loadedclass = this.homeService.getHomes(paramMap.get('homeId'));
-    //   this.form = new FormGroup({
-    //     title: new FormControl(this.loadedclass.notetitle, {
-    //       updateOn: 'blur',
-    //       validators: [Validators.required],
-    //     }),
-    //     module: new FormControl(this.loadedclass.notemodule, {
-    //       updateOn: 'blur',
-    //       validators: [Validators.required],
-    //     }),
-    //     description: new FormControl(this.loadedclass.notedescription, {
-    //       updateOn: 'blur',
-    //       validators: [Validators.required, Validators.maxLength(1800)],
-    //     }),
-    //   });
-    // });
+    this.route.paramMap.subscribe(paramMap => {
+      if (!paramMap.has('noteId')) {
+        this.navCtrl.navigateBack('/home/tabs/notes');
+        return;
+      }
+      this.noteSub = this.homeService.getNote(paramMap.get('noteId')).subscribe(notes => {
+        this.loadednote = notes;
+        this.form = new FormGroup({
+          title: new FormControl(this.loadednote.title, {
+            updateOn: 'blur',
+            validators: [Validators.required],
+          }),
+          description: new FormControl(this.loadednote.description, {
+            updateOn: 'blur',
+            validators: [Validators.required, Validators.maxLength(1800)],
+          }),
+        });
+      });
+
+    });
 
   }
 
@@ -53,6 +54,13 @@ export class EditNotesPage implements OnInit {
     }
 
     console.log(this.form);
+  }
+
+  // used to clear subscription to avoid memory leaks
+  ngOnDestroy() {
+    if (this.noteSub) {
+      this.noteSub.unsubscribe();
+    }
   }
 
 

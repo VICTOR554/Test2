@@ -19,7 +19,7 @@
             </ion-item>
             <ion-item>
               <ion-label position="floating">Password</ion-label>
-              <ion-input type="password" ngModel name="password" required minlength="6"  #passwordCtrl="ngModel"></ion-input>
+              <ion-input type="password" ngModel name="password" required   #passwordCtrl="ngModel"></ion-input>
             </ion-item>
             <ion-item  *ngIf="!passwordCtrl.valid && passwordCtrl.touched" lines="none" >
               <p>Should be 6 characters long.</p>

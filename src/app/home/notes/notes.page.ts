@@ -1,29 +1,37 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HomeService } from '../home.service';
 import { Note, Homes } from '../home.model';
 import { IonItemSliding } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-notes',
   templateUrl: './notes.page.html',
   styleUrls: ['./notes.page.scss'],
 })
-export class NotesPage implements OnInit {
-  // experimenting with output of array
+export class NotesPage implements OnInit, OnDestroy {
   loadednote: Note[];
-  loadedclass: Homes[];
+  private noteSub: Subscription;
+
 
   constructor(private homeService: HomeService, private router: Router) { }
 
   ngOnInit() {
-    this.loadednote = this.homeService.notes;
-    this.loadedclass = this.homeService.home;
+    this.noteSub = this.homeService.notes.subscribe(notes => {
+      this.loadednote = notes;
+    });
+
   }
-  onDelete(homeId: string, slidingItem: IonItemSliding) {
+  onDelete(noteId: string, slidingItem: IonItemSliding) {
     slidingItem.close();
-    console.log('delete item', homeId);
+    console.log('delete item', noteId);
   }
 
-
+// used to clear subscription to avoid memory leaks
+ngOnDestroy() {
+  if (this.noteSub) {
+    this.noteSub.unsubscribe();
+  }
+}
 }

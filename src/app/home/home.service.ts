@@ -1,14 +1,17 @@
 import { Injectable } from '@angular/core';
-import { Homes, Note, Task } from './home.model';
+import { Homes, Note, Alltask, Completedtask, Overdue, Flag } from './home.model';
+import { AuthService } from '../auth/auth.service';
+import { BehaviorSubject } from 'rxjs';
+import { take, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HomeService {
   // tslint:disable-next-line: variable-name
-  private _home: Homes[] = [
+  private _home = new BehaviorSubject<Homes[]>([
     new Homes(
-      '1',
+      'CL1',
       10,
       'HCI',
       'lecture',
@@ -19,7 +22,7 @@ export class HomeService {
 
     ),
     new Homes(
-      '2',
+      'CL2',
       11,
       'Software Engineering',
       'lab',
@@ -29,7 +32,7 @@ export class HomeService {
       'HWLL',
     ),
     new Homes(
-      '3',
+      'CL3',
       12,
       'Games and Design',
       'seminar',
@@ -40,7 +43,7 @@ export class HomeService {
 
     ),
     new Homes(
-      '4',
+      'CL4',
       13,
       'Advanced Topics',
       'exam',
@@ -50,7 +53,7 @@ export class HomeService {
       'Lect D',
     ),
     new Homes(
-      '5',
+      'CL5',
       14,
       'Cyber Security',
       'lecture',
@@ -59,108 +62,321 @@ export class HomeService {
       'Clark Kent',
       'Lect 202',
     )
-  ];
+  ]);
+
 
   // tslint:disable-next-line: variable-name
-  private _notes: Note[] = [
+  private _notes = new BehaviorSubject<Note[]>([
     new Note(
-      '1',
+      'N1',
       'Calender Problems',
       'HCI',
       'HCI talks about interaction between the system',
+      'abc'
 
     ),
     new Note(
-      '2',
+      'N2',
       'Tabs',
       'Software Engineering',
       'Software Engineering ia about how effective the system is',
+      'abc'
 
     ),
     new Note(
-      '3',
+      'N3',
       'Ionic',
       'Games and Design',
       'Teaches you how to manipulate pixels to create games of your own design',
+      'abc'
 
     ),
     new Note(
-      '4',
+      'N4',
       'Block Chain in the supply chain',
       'Advanced Topics',
       'Teaches you about cloud service and different data types',
+      'abc'
 
     ),
     new Note(
-      '5',
+      'N5',
       'Dissertation',
       'Cyber Security',
       'Teaches you how to create firewalls to stop hackers',
+      'abc'
     )
 
-  ];
+  ]);
 
   // tslint:disable-next-line: variable-name
-  private _tasks: Task[] = [
-    new Task(
-      '1',
-      '12/2/2020',
+  private _alltasks = new BehaviorSubject<Alltask[]>([
+    new Alltask(
+      'AT1',
+      new Date('2019-02-12'),
       'Build sentien life',
       'HCI',
       'Study the new article of advanced AI',
+      'abc'
+
 
     ),
-    new Task(
-      '2',
-      '18/2/2020',
+    new Alltask(
+      'AT2',
+      new Date('2020-02-18'),
       'Check if code smell',
       'Software Engineering',
       'Study the the lecture on code smells',
+      'abc'
+
     ),
-    new Task(
-      '3',
-      '20/2/2020',
+    new Alltask(
+      'AT3',
+      new Date('2020-02-20'),
       'Research Call of duty',
       'Games and Design',
       'Design Call of duty main frame',
+      'abc'
+
     ),
-    new Task(
-      '4',
-      '24/2/2020',
+    new Alltask(
+      'AT4',
+      new Date('2020-02-24'),
       'Study cloud service',
       'Advanced Topics',
       'Study how is cloud service advancing to the new age',
+      'abc'
+
     ),
-    new Task(
-      '5',
-      '26/2/2020',
+    new Alltask(
+      'AT5',
+      new Date('2020-02-26'),
       'Build firewall',
       'Cyber Security',
       'Build a firewall to stop the self replecating virus',
-    )
+      'abc'
 
-  ];
+    )
+  ]);
+
+  // tslint:disable-next-line: variable-name
+  private _completedtasks = new BehaviorSubject<Completedtask[]>([
+    new Completedtask(
+      'CT1',
+      new Date('2019-02-12'),
+      'Build sentien life',
+      'HCI',
+      'Study the new article of advanced AI',
+      'abc'
+
+
+    ),
+    new Completedtask(
+      'CT2',
+      new Date('2020-02-18'),
+      'Check if code smell',
+      'Software Engineering',
+      'Study the the lecture on code smells',
+      'abc'
+
+    ),
+    new Completedtask(
+      'CT3',
+      new Date('2020-02-20'),
+      'Research Call of duty',
+      'Games and Design',
+      'Design Call of duty main frame',
+      'abc'
+
+    ),
+    new Completedtask(
+      'CT4',
+      new Date('2020-02-24'),
+      'Study cloud service',
+      'Advanced Topics',
+      'Study how is cloud service advancing to the new age',
+      'abc'
+
+    ),
+    new Completedtask(
+      'CT5',
+      new Date('2020-02-26'),
+      'Build firewall',
+      'Cyber Security',
+      'Build a firewall to stop the self replecating virus',
+      'abc'
+
+    )
+  ]);
+
+  // tslint:disable-next-line: variable-name
+  private _flags = new BehaviorSubject<Flag[]>([
+    new Flag(
+      'FT1',
+      new Date('2019-02-12'),
+      'Build sentien life',
+      'HCI',
+      'Study the new article of advanced AI',
+      'abc'
+
+
+    ),
+    new Flag(
+      'FT2',
+      new Date('2020-02-18'),
+      'Check if code smell',
+      'Software Engineering',
+      'Study the the lecture on code smells',
+      'abc'
+
+    ),
+    new Flag(
+      'FT3',
+      new Date('2020-02-20'),
+      'Research Call of duty',
+      'Games and Design',
+      'Design Call of duty main frame',
+      'abc'
+
+    ),
+    new Flag(
+      'FT4',
+      new Date('2020-02-24'),
+      'Study cloud service',
+      'Advanced Topics',
+      'Study how is cloud service advancing to the new age',
+      'abc'
+
+    ),
+    new Flag(
+      'FT5',
+      new Date('2020-02-26'),
+      'Build firewall',
+      'Cyber Security',
+      'Build a firewall to stop the self replecating virus',
+      'abc'
+
+    )
+  ]);
+
+  // tslint:disable-next-line: variable-name
+  private _overdues = new BehaviorSubject<Overdue[]>([
+    new Overdue(
+      'OT1',
+      new Date('2019-02-12'),
+      'Build sentien life',
+      'HCI',
+      'Study the new article of advanced AI',
+      'abc'
+
+
+    ),
+    new Overdue(
+      'OT2',
+      new Date('2020-02-18'),
+      'Check if code smell',
+      'Software Engineering',
+      'Study the the lecture on code smells',
+      'abc'
+
+    ),
+    new Overdue(
+      'OT3',
+      new Date('2020-02-20'),
+      'Research Call of duty',
+      'Games and Design',
+      'Design Call of duty main frame',
+      'abc'
+
+    ),
+    new Overdue(
+      'OT4',
+      new Date('2020-02-24'),
+      'Study cloud service',
+      'Advanced Topics',
+      'Study how is cloud service advancing to the new age',
+      'abc'
+
+    ),
+    new Overdue(
+      'OT5',
+      new Date('2020-02-26'),
+      'Build firewall',
+      'Cyber Security',
+      'Build a firewall to stop the self replecating virus',
+      'abc'
+
+    )
+  ]);
+
+  constructor(private authService: AuthService) { }
 
 
   get home() {
-    return [...this._home];
+    return this._home.asObservable();
   }
-
   get notes() {
-    return [...this._notes];
+    return this._notes.asObservable();
   }
-  get tasks() {
-    return [...this._tasks];
+  get Alltasks() {
+    return this._alltasks.asObservable();
+  }
+  get Completedtasks() {
+    return this._completedtasks.asObservable();
+  }
+  get Overdue() {
+    return this._overdues.asObservable();
+  }
+  get Flag() {
+    return this._flags.asObservable();
   }
 
   getHomes(id: string) {
-    return {...this._home.find(p => p.id === id )};
+    return this.home.pipe(take(1), map(home => {
+      return { ...home.find(p => p.id === id) };
+    })
+    );
   }
+
   getNote(id: string) {
-    return {...this._notes.find(p => p.id === id )};
+    return this.notes.pipe(take(1), map(notes => {
+      return { ...notes.find(p => p.id === id) };
+    })
+    );
   }
-  getTask(id: string) {
-    return {...this._tasks.find(p => p.id === id )};
+
+  addNote(title: string, modul: string, description: string) {
+    const newNote = new Note(
+      Math.random().toString(),
+      title,
+      modul,
+      description,
+      this.authService.userId
+    );
+    this.notes.pipe(take(1)).subscribe(notes => {
+      this._notes.next(notes.concat(newNote));
+    });
   }
-  constructor() { }
+
+  getAlltask(id: string) {
+    return this._alltasks.pipe(take(1), map(alltasks => {
+      return { ...alltasks.find(p => p.id === id) };
+    })
+    );
+  }
+
+
+  addAlltask(duedate: Date, title: string, modul: string, description: string) {
+    const newAlltask = new Alltask(
+      Math.random().toString(),
+      duedate,
+      title,
+      modul,
+      description,
+      this.authService.userId
+    );
+    this._alltasks.pipe(take(1)).subscribe(alltasks => {
+      this._alltasks.next(alltasks.concat(newAlltask));
+    });
+  }
 }

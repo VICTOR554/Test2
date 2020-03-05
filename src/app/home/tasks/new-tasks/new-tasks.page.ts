@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { HomeService } from '../../home.service';
+import { Router } from '@angular/router';
+
 
 
 @Component({
@@ -9,10 +12,18 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class NewTasksPage implements OnInit {
 
-  form: FormGroup;
 
-  constructor() { }
+  form: FormGroup;
+  date;
+  defaultStartTime;
+  defaultEndTime;
+
+  constructor(private homeService: HomeService, private router: Router) { }
+
   ngOnInit() {
+    this.date = new Date().toISOString();
+    this.defaultStartTime = new Date(new Date().setHours(5, 0, 0)).toISOString();
+    this.defaultEndTime = new Date(new Date().setHours(19, 0, 0)).toISOString();
     this.form = new FormGroup({
       title: new FormControl(null, {
         updateOn: 'blur',
@@ -33,8 +44,25 @@ export class NewTasksPage implements OnInit {
     });
   }
 
-  onCreateOffer() {
+  onCreateAlltask() {
     console.log(this.form);
+    if (!this.form.valid) {
+      return;
+    }
+
+    // tslint:disable-next-line: max-line-length
+    this.homeService.addAlltask(
+      this.form.value.title,
+      this.form.value.duedate,
+      this.form.value.modul,
+      this.form.value.description,
+    ),
+    console.log(this.homeService.notes);
+    this.form.reset();
+    this.router.navigate(['home/tabs/notes']);
+
   }
+
+
 
 }
